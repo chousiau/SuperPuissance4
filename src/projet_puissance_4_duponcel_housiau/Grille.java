@@ -157,20 +157,22 @@ public class Grille {
         // on ne peux pas caser 4 jeton sur la diagonale déscendante
         
         while (iDepart<3){
-            while ((i+iDepart)<5 && (j+jDepart)<6){
-                if(Cellules[iDepart+i][jDepart+j].JetonCourant.Couleur.equals(unJoueur.couleur)
-                        &&Cellules[iDepart+i+1][jDepart+j+1].JetonCourant.Couleur.equals(unJoueur.couleur)){
-                    compteur +=1;
-                    if (compteur == 3){
-                        return true;
-                    }
-                else {
+            
+            
+            while ((i+iDepart)<5 || (j+jDepart)<6){
+                if (Cellules[iDepart+i][jDepart+j].JetonCourant!=null && Cellules[iDepart+i+1][jDepart+j].JetonCourant!=null){
+                    if (Cellules[iDepart + i][jDepart + j].JetonCourant.Couleur.equals(unJoueur.couleur)
+                            && Cellules[iDepart + i + 1][jDepart + j + 1].JetonCourant.Couleur.equals(unJoueur.couleur)) {
+                        compteur += 1;
+                        if (compteur == 3) {
+                            return true;
+                        } 
+                    }else {
                         compteur = 0;
+                        }
                 }
-                    
-                
-                i++;
-                j++;
+            i++;
+            j++;
             }
         }
         return false;
