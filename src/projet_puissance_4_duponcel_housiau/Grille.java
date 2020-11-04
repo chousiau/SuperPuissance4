@@ -61,10 +61,14 @@ public class Grille {
                 }
                 else{
                     Text+="["+Cellules[i][j].lireCouleurDuJeton()+"]";
-                }   
+                }
+                if (j == 6){
+                    Text+= " " + (i+1);
+                }
             }
             Text+="\n";
         }
+        System.out.println(" 1  2  3  4  5  6  7");
         System.out.println(Text);
     }
     public boolean celluleOccupee(int coor1, int coor2){
@@ -151,30 +155,82 @@ public class Grille {
         int jDepart = 0;
         int i = 0;
         int j = 0;
-        
+        compteur = 0;
         //On parcourt dans un premier temps la colonne de gauche avec P. Il n'est
         //pas nécessaire d'aller au dela de la 3è ligne car après cette ligne 
         // on ne peux pas caser 4 jeton sur la diagonale déscendante
         
         while (iDepart<3){
             
-            
-            while ((i+iDepart)<5 || (j+jDepart)<6){
-                if (Cellules[iDepart+i][jDepart+j].JetonCourant!=null && Cellules[iDepart+i+1][jDepart+j].JetonCourant!=null){
+            //Cette première condition permet de s'arrêter quand on atteint le
+            //bord du plateau
+            while ((i+iDepart)<5 && (j+jDepart)<6){
+                
+                //Cette condition permet de vérifier que les deux cases comparées
+                //contiennent bien un jeton afin d'éviter des problèmes par la suite
+                if (Cellules[iDepart+i][jDepart+j].JetonCourant!=null && Cellules[iDepart+i+1][jDepart+j+1].JetonCourant!=null){
+                    
+                    //Cette condition compare un jeton à son suivant dans la diagonale
                     if (Cellules[iDepart + i][jDepart + j].JetonCourant.Couleur.equals(unJoueur.couleur)
                             && Cellules[iDepart + i + 1][jDepart + j + 1].JetonCourant.Couleur.equals(unJoueur.couleur)) {
-                        compteur += 1;
-                        if (compteur == 3) {
+                        compteur += 1; // si les deux jetons sont identiques, on implémente
+                        if (compteur == 3) { //Si le compteur atteint 3, la condition de victoire est remplie
                             return true;
                         } 
                     }else {
-                        compteur = 0;
+                        compteur = 0;//Si les deux jetons sont différents, le compteur retourne à 0
                         }
                 }
-            i++;
-            j++;
+                i++; //On incrémente i et j pour passer à la case suivante en diagonale
+                j++;
             }
+            i=0;
+            j=0;
+            compteur = 0;
+            iDepart++;
         }
+        
+        //On parcourt maintenant la ligne du haut avec P.
+        //A partir de la cellule d'indice [0][3], on ne peut plus caller 
+        //4 jetons en diagonale déscendante. Il n'est donc pas nécessaire de
+        //vérifier après cette cellule
+        
+        //Réinitialisation des variables
+        iDepart = 0;
+        jDepart = 0;
+        i=0;
+        j=0;
+        compteur = 0;
+        while (jDepart < 4) {
+
+            //Cette première condition permet de s'arrêter quand on atteint le
+            //bord du plateau
+            while ((i + iDepart) < 5 && (j + jDepart) < 6) {
+
+                //Cette condition permet de vérifier que les deux cases comparées
+                //contiennent bien un jeton afin d'éviter des problèmes par la suite
+                if (Cellules[iDepart + i][jDepart + j].JetonCourant != null && Cellules[iDepart + i + 1][jDepart + j + 1].JetonCourant != null) {
+
+                    //Cette condition compare un jeton à son suivant dans la diagonale
+                    if (Cellules[iDepart + i][jDepart + j].JetonCourant.Couleur.equals(unJoueur.couleur)
+                            && Cellules[iDepart + i + 1][jDepart + j + 1].JetonCourant.Couleur.equals(unJoueur.couleur)) {
+                        compteur += 1; // si les deux jetons sont identiques, on implémente
+                        if (compteur == 3) { //Si le compteur atteint 3, la condition de victoire est remplie
+                            return true;
+                        }
+                    } else {
+                        compteur = 0;//Si les deux jetons sont différents, le compteur retourne à 0
+                    }
+                }
+                i++; //On incrémente i et j pour passer à la case suivante en diagonale
+                j++;
+            }
+            i = 0;
+            j = 0;
+            compteur = 0;
+            jDepart++;
+        }
+        
         return false;
     }
     
