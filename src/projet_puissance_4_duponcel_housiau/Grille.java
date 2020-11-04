@@ -110,6 +110,8 @@ public class Grille {
                 
                 else{compteur = 0;}
             }
+            
+            compteur = 0;
         }
         
         //On parcours les lignes
@@ -135,6 +137,7 @@ public class Grille {
                         compteur = 0;
                     }
                 }
+            compteur = 0;
             }
         
         //On parcours les diagonales déscendantes
@@ -231,6 +234,90 @@ public class Grille {
             jDepart++;
         }
         
+        
+        
+        //On parcours les diagonales montantes
+        
+        //Pour les diagonales montantes on déplace P le long de la colone de gauche
+        //Et de la ligne du bas
+        iDepart = 5;
+        jDepart = 0;
+        i=0;
+        j=0;
+        compteur = 0;
+        //Ici P est initialement dans le coins en bas à gauche, et on rempnte en 
+        //premier le long de la colone de gauche jusqu'à atteindre la cellule [3][0]
+        
+        //On parcours la colone de gauche de bas en haut
+        while (iDepart>2){
+            
+            //Cette première condition permet de s'arrêter quand on atteint le
+            //bord du plateau
+            while ((i+iDepart)>0 && (j+jDepart)<6){
+                
+                //Cette condition permet de vérifier que les deux cases comparées
+                //contiennent bien un jeton afin d'éviter des problèmes par la suite
+                if (Cellules[iDepart+i][jDepart+j].JetonCourant!=null && Cellules[iDepart+i-1][jDepart+j+1].JetonCourant!=null){
+                    
+                    //Cette condition compare un jeton à son suivant dans la diagonale
+                    if (Cellules[iDepart + i][jDepart + j].JetonCourant.Couleur.equals(unJoueur.couleur)
+                            && Cellules[iDepart + i - 1][jDepart + j + 1].JetonCourant.Couleur.equals(unJoueur.couleur)) {
+                        compteur += 1; // si les deux jetons sont identiques, on implémente
+                        if (compteur == 3) { //Si le compteur atteint 3, la condition de victoire est remplie
+                            return true;
+                        } 
+                    }else {
+                        compteur = 0;//Si les deux jetons sont différents, le compteur retourne à 0
+                        }
+                }
+                i--; //On décrémente i et on incrémente j pour passer à la case suivante en diagonale
+                j++;
+                
+            }
+            iDepart--;
+            compteur = 0;
+            i=0;
+            j=0;
+            
+        }
+        
+        //On parcours maintenant la ligne du bas avec P
+        
+        //Réinitialisation des variables
+        iDepart = 5;
+        jDepart = 0;
+        i=0;
+        j=0;
+        compteur = 0;
+        while (jDepart < 3) {
+
+            //Cette première condition permet de s'arrêter quand on atteint le
+            //bord du plateau
+            while ((i + iDepart) > 0 && (j + jDepart) < 6) {
+
+                //Cette condition permet de vérifier que les deux cases comparées
+                //contiennent bien un jeton afin d'éviter des problèmes par la suite
+                if (Cellules[iDepart + i][jDepart + j].JetonCourant != null && Cellules[iDepart + i - 1][jDepart + j + 1].JetonCourant != null) {
+
+                    //Cette condition compare un jeton à son suivant dans la diagonale
+                    if (Cellules[iDepart + i][jDepart + j].JetonCourant.Couleur.equals(unJoueur.couleur)
+                            && Cellules[iDepart + i - 1][jDepart + j + 1].JetonCourant.Couleur.equals(unJoueur.couleur)) {
+                        compteur += 1; // si les deux jetons sont identiques, on implémente
+                        if (compteur == 3) { //Si le compteur atteint 3, la condition de victoire est remplie
+                            return true;
+                        }
+                    } else {
+                        compteur = 0;//Si les deux jetons sont différents, le compteur retourne à 0
+                    }
+                }
+                i--; //On décrémente i et on incrémente j pour passer à la case suivante en diagonale
+                j++;
+            }
+            jDepart++;
+            compteur = 0;
+            i=0;
+            j=0;
+        }    
         return false;
     }
     

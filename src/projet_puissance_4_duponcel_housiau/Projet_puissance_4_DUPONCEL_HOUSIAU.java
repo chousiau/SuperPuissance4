@@ -36,13 +36,15 @@ public class Projet_puissance_4_DUPONCEL_HOUSIAU {
         
         uneGrille.ajouterJetonDansColonne(unJeton, 3);
         uneGrille.ajouterJetonDansColonne(unJeton, 3);
+        uneGrille.ajouterJetonDansColonne(unJeton, 3);
+        
         
         uneGrille.ajouterJetonDansColonne(unJeton, 4);
         uneGrille.ajouterJetonDansColonne(unJeton2, 4);
         uneGrille.ajouterJetonDansColonne(unJeton2, 4);
+        uneGrille.ajouterJetonDansColonne(unJeton, 4);
+        uneGrille.ajouterJetonDansColonne(unJeton, 4);
         uneGrille.ajouterJetonDansColonne(unJeton2, 4);
-        uneGrille.ajouterJetonDansColonne(unJeton, 4);
-        uneGrille.ajouterJetonDansColonne(unJeton, 4);
         
         uneGrille.ajouterJetonDansColonne(unJeton2, 5);
         uneGrille.ajouterJetonDansColonne(unJeton2, 5);
