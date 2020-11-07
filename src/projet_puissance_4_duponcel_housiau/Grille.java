@@ -26,6 +26,10 @@ public class Grille {
         int ligne = 0;
         while (ligne<6){
             if (Cellules[5-ligne][colonne-1].affecterJeton(unJeton)){
+                if (Cellules[5-ligne][colonne-1].trouNoir == true){
+                    Cellules[5-ligne][colonne-1].activerTrouNoir();
+                    System.out.println("Oh non ! ton jeton a été aspiré par un trou noir ;)");
+                }
                 return true;
             }
             else{
@@ -35,8 +39,8 @@ public class Grille {
         return false;
     }
     public boolean etreRemplie(){
-        for (int i =0;i<7;i++){
-            if (Cellules[6][i]==null){
+        for (int j =0;j<7;j++){
+            if (Cellules[0][j].JetonCourant==null){
                 return false;
             }
         }
@@ -47,7 +51,7 @@ public class Grille {
     public void viderGrille(){
         for (int i = 0; i<6; i++){
             for (int j = 0; j<7; j++){
-                Cellules[i][j]=null;
+                Cellules[i][j]=new Cellule(null,false,false);
             }
         }
     }
@@ -56,7 +60,10 @@ public class Grille {
         String Text="";
         for (int i = 0; i<6; i++){
             for (int j = 0; j<7; j++){
-                if (Cellules[i][j].JetonCourant==null){
+                if (Cellules[i][j].trouNoir == true){
+                    Text+="[.]";
+                }
+                else if (Cellules[i][j].JetonCourant==null){
                     Text+="[ ]";
                 }
                 else{
@@ -86,7 +93,7 @@ public class Grille {
         //Définition d'un compteur pour compter le nombre de jetons d'affilés
         int compteur = 0;
         
-        //On parcours les colones
+        //On parcours les colonnes
         for (int i = 0; i<6; i++){
             for (int j = 0; j<6;j++){
                 
@@ -322,7 +329,7 @@ public class Grille {
     }
     
     public boolean colonneRemplie(int colonne){
-        return Cellules[0][colonne + 1] != null;
+        return Cellules[0][colonne - 1].JetonCourant != null;
     }
     
 }
