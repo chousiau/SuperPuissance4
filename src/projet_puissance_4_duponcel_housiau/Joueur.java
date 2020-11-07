@@ -16,8 +16,21 @@ public class Joueur {
    int nombreDesintegrateur;
    int nombreJetonsRestant;
    
-   public Joueur(String Couleur){
-       couleur = Couleur;
+   public Joueur(String Nom){
+       nom = Nom;
+   }
+   public void affecterCouleur(String Couleur){
+       this.couleur = Couleur;
+   }
+   
+   public boolean ajouterJeton(Jeton unJeton){
+       for (int i = 0; i < 21 ; i++){
+           if (this.ListeJetons[i] == null){
+               this.ListeJetons[i] = unJeton;
+               return true;
+           }
+       }
+       return false;
    }
     
 }

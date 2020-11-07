@@ -321,4 +321,8 @@ public class Grille {
         return false;
     }
     
+    public boolean colonneRemplie(int colonne){
+        return Cellules[0][colonne + 1] != null;
+    }
+    
 }
