@@ -43,6 +43,54 @@ public class Cellule {
     //que le toString renvoie : le trou noir s'il y a un trou noir et un désintégrateur
     //                          sinon le contenu de la case
 
+    public boolean placerTrouNoir(){
+        if (trouNoir == false){
+            trouNoir = true;
+            return true;
+        }
+        else {
+            return false;
+        }
+    }
+    public boolean presenceTrouNoir(){
+        return trouNoir;
+        
+    }
+    public boolean activerTrouNoir(){
+        if (trouNoir == true){
+            trouNoir = false;
+            JetonCourant = null;
+            return true;
+        }
+        else{
+            return false;
+        }
+    }
+    public Jeton recupererJeton(){
+        return JetonCourant;
+    }
+    public boolean placerDesintegrateur(){
+        if (desintegrateur == false){
+            desintegrateur = true;
+            return true;
+        }
+        else{
+        return false;   
+        }
+    }
     
+    public boolean presenceDesintegrateur(){
+        return desintegrateur;
+        
+    }
     
+    public boolean recupererDesintegrateur(){
+        if (desintegrateur = true){
+            desintegrateur = false;
+            return true;
+        }
+        else{
+            return false;
+        }
+    }
 }

@@ -5,6 +5,8 @@
  */
 package projet_puissance_4_duponcel_housiau;
 
+import java.util.Scanner;
+
 /**
  *
  * @author Charl
@@ -22,16 +24,40 @@ public class Grille {
     }
 
     
-    public boolean ajouterJetonDansColonne(Jeton unJeton, int colonne){
-        int ligne = 0;
+    public boolean ajouterJetonDansColonne(Partie unePartie, Jeton unJeton, int colonne){
+        int ligne = 0;  //Définie la ligne dans laquel le jeton sera ajouté
+        
+        //On parcours les lignes de bas en haut jusqu'a en trouver une vide
         while (ligne<6){
+            
+            //Cas ou l'affectation du jeton est possible
             if (Cellules[5-ligne][colonne-1].affecterJeton(unJeton)){
-                if (Cellules[5-ligne][colonne-1].trouNoir == true){
+                
+                //Cas où le jeton est affecté à une case contenant un trou noir et un désintégrateur
+                if (Cellules[5-ligne][colonne-1].trouNoir && Cellules[5-ligne][colonne-1].desintegrateur ){
                     Cellules[5-ligne][colonne-1].activerTrouNoir();
-                    System.out.println("Oh non ! ton jeton a été aspiré par un trou noir ;)");
+                    Cellules[5-ligne][colonne-1].recupererDesintegrateur();
+                    System.out.println("Oh non ! ton jeton a été aspiré par un trou noir ;)."
+                            + " Oh ! Un désintégrateur était caché derrière!");
                 }
+                
+                //Cas où le jeton est affecté à une case avec un trou noir seul
+                if (Cellules[5-ligne][colonne-1].trouNoir){
+                    System.out.println("Oh non ! ton jeton a été aspiré par un trou noir ;).");
+                    Cellules[5-ligne][colonne-1].activerTrouNoir();   
+                }
+                
+                //Cas où le jeton est affecté à une case avec un désintégrateur seul
+                if (Cellules[5-ligne][colonne-1].recupererDesintegrateur()){
+                    unePartie.JoueurCourant.nombreDesintegrateur++;
+                    System.out.println("Tu as gagné un désintégrateur.");
+                }
+ 
+
+                
                 return true;
             }
+            //Cas ou l'affectation du jeton n'est pas possible, on incrémente la ligne
             else{
                 ligne+=1;
             }
@@ -60,21 +86,36 @@ public class Grille {
         String Text="";
         for (int i = 0; i<6; i++){
             for (int j = 0; j<7; j++){
-                if (Cellules[i][j].trouNoir == true){
-                    Text+="[.]";
+                
+                //Cas trou noir + désintégrateur ou trou noir seul
+                if ((Cellules[i][j].trouNoir && Cellules[i][j].desintegrateur)
+                     ||(Cellules[i][j].trouNoir)){
+                    Text+="[O]";
                 }
+                
+                //Cas désintégrateur seul
+                else if (Cellules[i][j].desintegrateur){
+                    Text+="[\u001B[36m"+"D"+"\u001B[0m]";
+                }
+                
+                //Cas case vide
                 else if (Cellules[i][j].JetonCourant==null){
                     Text+="[ ]";
                 }
+                
+                //cas case contenant un jeton
                 else{
                     Text+="["+Cellules[i][j].lireCouleurDuJeton()+"]";
                 }
+                
+                //Ajout des numéros de ligne 
                 if (j == 6){
                     Text+= " " + (i+1);
                 }
             }
             Text+="\n";
         }
+        //Ajout des numéros de colonne
         System.out.println(" 1  2  3  4  5  6  7");
         System.out.println(Text);
     }
@@ -328,8 +369,43 @@ public class Grille {
         return false;
     }
     
+    public Jeton recupererJeton(int coor1,int coor2){
+        //On initialise le jeton, car NetBean ne peut pas vérifier que le programme 
+        //passera à coup sûr dans la "if" où il est réellement initialisé.
+        Jeton JetonArenvoyer;
+        JetonArenvoyer = Cellules[coor1][coor2].JetonCourant;
+        Cellules[coor1][coor2].JetonCourant = null;
+        
+        
+        //Variables permettant de récupérer les coordonnées du jeton visé
+
+
+        return JetonArenvoyer;   
+        
+    }
+    public void tasserGrille(int coor1, int coor2){
+        Jeton JetonTemp; //Utilisé pour stocker un jeton temporairement dans la boucle
+        if (Cellules[coor1][coor2].JetonCourant == null){
+            for (int i = coor1-1; i>=0; i--){
+                JetonTemp = Cellules[i][coor2].recupererJeton();//Récupération du jeton dans la case n+1 (-1 ici car i va de haut en bas)
+                Cellules[i][coor2].JetonCourant = null;//Suppression du jeton dans la case n+1
+                Cellules[i+1][coor2].affecterJeton(JetonTemp);//Affectation du jeton dans la case n
+            }
+        }
+    }
+    
     public boolean colonneRemplie(int colonne){
         return Cellules[0][colonne - 1].JetonCourant != null;
+    }
+    
+    public boolean placerDesintegrateur(int coor1, int coor2){
+        if (!Cellules[coor1][coor2].presenceDesintegrateur()){
+            Cellules[coor1][coor2].placerDesintegrateur();
+            return true;
+        }
+        else{
+            return false;
+        }
     }
     
 }
