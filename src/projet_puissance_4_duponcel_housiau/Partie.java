@@ -167,7 +167,7 @@ public class Partie {
                 do{
                     colonneSelectionnee = sc.nextInt();
                     
-                    //Cas ou le joueur choisi d'utiliser un désintégrateur
+                    //CAS UTILISER UN DESINTEGRATEUR
                     if (colonneSelectionnee == 9){
                         //Cas ou le joueur possède au moins un désintégrateur
                         if (JoueurCourant.utiliserDesintegrateur()){
@@ -215,7 +215,7 @@ public class Partie {
                         
                     }
                     
-                    //Cas où le joueur choisi de récupérer un jeton
+                    //CAS RECUPERER UN JETON
                     else if (colonneSelectionnee == 8){ 
                         System.out.println("Sélectionnez la colonne du jeton à récupérer");
                         colonneRecup = sc.nextInt() - 1;
@@ -248,7 +248,7 @@ public class Partie {
                         
                     }
                     
-                    //Cas où le joueur choisi de jouer
+                    //CAS JOUER
                     else if (!GrilleDeJeu.colonneRemplie(colonneSelectionnee)){
                         //Ici, si le programme arrive dans la boucle et que la colonne 
                         //est à une case d'être pleine, il rempliera la colonne puis

@@ -85,7 +85,7 @@ public class Cellule {
     }
     
     public boolean recupererDesintegrateur(){
-        if (desintegrateur = true){
+        if(presenceDesintegrateur()){
             desintegrateur = false;
             return true;
         }

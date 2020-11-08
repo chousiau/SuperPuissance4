@@ -34,21 +34,23 @@ public class Grille {
             if (Cellules[5-ligne][colonne-1].affecterJeton(unJeton)){
                 
                 //Cas où le jeton est affecté à une case contenant un trou noir et un désintégrateur
-                if (Cellules[5-ligne][colonne-1].trouNoir && Cellules[5-ligne][colonne-1].desintegrateur ){
+                if (Cellules[5-ligne][colonne-1].presenceTrouNoir() && Cellules[5-ligne][colonne-1].presenceDesintegrateur() ){
                     Cellules[5-ligne][colonne-1].activerTrouNoir();
                     Cellules[5-ligne][colonne-1].recupererDesintegrateur();
+                    unePartie.JoueurCourant.nombreDesintegrateur++;
                     System.out.println("Oh non ! ton jeton a été aspiré par un trou noir ;)."
                             + " Oh ! Un désintégrateur était caché derrière!");
                 }
                 
                 //Cas où le jeton est affecté à une case avec un trou noir seul
-                if (Cellules[5-ligne][colonne-1].trouNoir){
+                if (Cellules[5-ligne][colonne-1].presenceTrouNoir()){
                     System.out.println("Oh non ! ton jeton a été aspiré par un trou noir ;).");
                     Cellules[5-ligne][colonne-1].activerTrouNoir();   
                 }
                 
                 //Cas où le jeton est affecté à une case avec un désintégrateur seul
-                if (Cellules[5-ligne][colonne-1].recupererDesintegrateur()){
+                if (Cellules[5-ligne][colonne-1].presenceDesintegrateur()){
+                    Cellules[5-ligne][colonne-1].recupererDesintegrateur();
                     unePartie.JoueurCourant.nombreDesintegrateur++;
                     System.out.println("Tu as gagné un désintégrateur.");
                 }
@@ -407,5 +409,10 @@ public class Grille {
             return false;
         }
     }
+    //Override toString à des fins de test du code
+    /*@Override
+    public String toString(){
+        
+    }*/
     
 }
